@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: WP Block Enable/Disable Toggle (Global)
- * Description: Adds an "Enabled" toggle to all blocks. When disabled, the block is not rendered on the front end. Also shows a crossed-out icon in List View for disabled blocks.
- * Version: 1.1.0
+ * Plugin Name: Block Enable/Disable Toggle (Global)
+ * Description: Adds an "Enabled" toggle to all blocks. When disabled, the block is not rendered on the front end. Shows a disabled badge in List View.
+ * Version: 1.2.2
  * Author: 9ete
  * License: GPL-2.0-or-later
  */
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('WP_Block_Enable_Toggle')) {
     final class WP_Block_Enable_Toggle
     {
-        private const ASSET_HANDLE = 'wpBlockEnable-block-toggle';
+        private const ASSET_HANDLE = 'wp-block-toggle';
 
         public function __construct()
         {
@@ -22,10 +22,6 @@ if (!class_exists('WP_Block_Enable_Toggle')) {
             add_filter('render_block', [$this, 'maybe_omit_block_on_frontend'], 10, 2);
         }
 
-        /**
-         * Enqueue the editor script and styles that add the attribute, inspector control,
-         * and List View icon for disabled blocks.
-         */
         public function enqueue_editor_assets(): void
         {
             $js_path = plugin_dir_path(__FILE__) . 'assets/wp-block-toggle.js';
@@ -47,7 +43,7 @@ if (!class_exists('WP_Block_Enable_Toggle')) {
                     'wp-compose',
                     'wp-blocks',
                 ],
-                file_exists($js_path) ? filemtime($js_path) : false,
+                file_exists($js_path) ? filemtime($js_path) : time(),
                 true
             );
             wp_enqueue_script(self::ASSET_HANDLE);
@@ -56,23 +52,19 @@ if (!class_exists('WP_Block_Enable_Toggle')) {
                 self::ASSET_HANDLE,
                 $css_url,
                 [],
-                file_exists($css_path) ? filemtime($css_path) : false
+                file_exists($css_path) ? filemtime($css_path) : time()
             );
             wp_enqueue_style(self::ASSET_HANDLE);
         }
 
-        /**
-         * If a block instance has our "wpBlockEnableEnabled" attribute set to false, do not render it on the front end.
-         */
         public function maybe_omit_block_on_frontend(string $block_content, array $block): string
         {
-            // Only affect real front-end rendering. Leave editor, admin screens, and REST responses alone.
             if (is_admin() || (defined('REST_REQUEST') && REST_REQUEST)) {
                 return $block_content;
             }
 
             $attrs = isset($block['attrs']) && is_array($block['attrs']) ? $block['attrs'] : [];
-            if (array_key_exists('wpBlockEnableEnabled', $attrs) && $attrs['wpBlockEnableEnabled'] === false) {
+            if (array_key_exists('wpBlockEnabled', $attrs) && $attrs['wpBlockEnabled'] === false) {
                 return '';
             }
 
