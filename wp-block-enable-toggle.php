@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Block Enable/Disable Toggle (Global)
  * Description: Adds an "Enabled" toggle to all blocks. When disabled, the block is not rendered on the front end. Shows a disabled badge in List View.
- * Version: 1.2.2
+ * Version: 1.2.3
  * Author: 9ete
  * License: GPL-2.0-or-later
  */
