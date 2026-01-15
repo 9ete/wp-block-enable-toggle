@@ -1,0 +1,45 @@
+/* Editor canvas styling for disabled blocks */
+.block-editor-block-list__block.wp-block-toggle-editor-disabled {
+    position: relative;
+    opacity: 0.6;
+    outline: 2px dashed #c3c4c7;
+    outline-offset: 4px;
+    transition: opacity 0.2s ease, outline-color 0.2s ease;
+}
+
+.block-editor-block-list__block.wp-block-toggle-editor-disabled.is-selected {
+    opacity: 0.65;
+    outline-color: #d63638;
+}
+
+.block-editor-block-list__block.wp-block-toggle-editor-disabled::after {
+    content: 'Disabled';
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    padding: 2px 8px;
+    font-size: 11px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Dim disabled blocks in List View and show a badge */
+.block-editor-list-view__block.wp-block-toggle-disabled,
+.block-editor-list-view-block.wp-block-toggle-disabled,
+.wp-block-toggle-disabled[data-block],
+.wp-block-toggle-disabled[role="treeitem"] {
+    opacity: 0.75;
+}
+
+.wp-block-toggle-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9em;
+    margin-left: 6px;
+    line-height: 1;
+}
