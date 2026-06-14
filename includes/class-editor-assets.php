@@ -60,7 +60,7 @@ class Editor_Assets {
 	 * @return array Associative array with 'dependencies' (string[]) and 'version' (string).
 	 */
 	public function asset_data(): array {
-		$asset_path = BLOCK_ENABLE_TOGGLE_DIR . 'build/index.asset.php';
+		$asset_path = $this->manifest_path();
 
 		$defaults = array(
 			'dependencies' => array(),
@@ -81,5 +81,17 @@ class Editor_Assets {
 			'dependencies' => isset( $asset['dependencies'] ) && is_array( $asset['dependencies'] ) ? $asset['dependencies'] : array(),
 			'version'      => isset( $asset['version'] ) && is_string( $asset['version'] ) ? $asset['version'] : BLOCK_ENABLE_TOGGLE_VERSION,
 		);
+	}
+
+	/**
+	 * Absolute path to the build manifest.
+	 *
+	 * Isolated so tests can point asset_data() at a missing or malformed
+	 * manifest to exercise the fallback paths.
+	 *
+	 * @return string
+	 */
+	protected function manifest_path(): string {
+		return BLOCK_ENABLE_TOGGLE_DIR . 'build/index.asset.php';
 	}
 }

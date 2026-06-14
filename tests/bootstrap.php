@@ -20,10 +20,12 @@ define( 'BLOCK_ENABLE_TOGGLE_FILE', $bet_plugin_dir . 'block-enable-toggle.php' 
 define( 'BLOCK_ENABLE_TOGGLE_DIR', $bet_plugin_dir );
 define( 'BLOCK_ENABLE_TOGGLE_URL', 'https://example.test/wp-content/plugins/block-enable-toggle/' );
 
-$GLOBALS['_bet_hooks']                = array();
-$GLOBALS['_bet_enqueued_scripts']     = array();
-$GLOBALS['_bet_script_translations']  = array();
-$GLOBALS['_bet_is_admin']             = false;
+$GLOBALS['_bet_hooks']               = array();
+$GLOBALS['_bet_enqueued_scripts']    = array();
+$GLOBALS['_bet_enqueued_styles']     = array();
+$GLOBALS['_bet_script_translations'] = array();
+$GLOBALS['_bet_style_data']          = array();
+$GLOBALS['_bet_is_admin']            = false;
 
 if ( ! function_exists( 'is_admin' ) ) {
 	/**
@@ -96,6 +98,38 @@ if ( ! function_exists( 'wp_set_script_translations' ) ) {
 	 */
 	function wp_set_script_translations( $handle, $domain = 'default', $path = '' ) {
 		$GLOBALS['_bet_script_translations'][] = array( 'handle' => $handle, 'domain' => $domain, 'path' => $path );
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_enqueue_style' ) ) {
+	/**
+	 * Stub for wp_enqueue_style(); records the call.
+	 *
+	 * @param string $handle Handle.
+	 * @param string $src    Source URL.
+	 * @param array  $deps   Dependencies.
+	 * @param mixed  $ver    Version.
+	 * @param string $media  Media.
+	 * @return bool
+	 */
+	function wp_enqueue_style( $handle, $src = '', $deps = array(), $ver = false, $media = 'all' ) {
+		$GLOBALS['_bet_enqueued_styles'][] = array( 'handle' => $handle, 'src' => $src, 'deps' => $deps, 'ver' => $ver, 'media' => $media );
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_style_add_data' ) ) {
+	/**
+	 * Stub for wp_style_add_data(); records the call.
+	 *
+	 * @param string $handle Handle.
+	 * @param string $key    Data key.
+	 * @param mixed  $value  Data value.
+	 * @return bool
+	 */
+	function wp_style_add_data( $handle, $key, $value ) {
+		$GLOBALS['_bet_style_data'][] = array( 'handle' => $handle, 'key' => $key, 'value' => $value );
 		return true;
 	}
 }

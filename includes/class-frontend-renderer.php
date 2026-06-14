@@ -97,8 +97,8 @@ class Frontend_Renderer {
 
 		if ( is_admin() ) {
 			$is_editor = true;
-		} elseif ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-			$is_editor = ( '' !== $this->rest_route && false !== strpos( $this->rest_route, '/block-renderer/' ) );
+		} elseif ( $this->is_rest_request() ) {
+			$is_editor = ( false !== strpos( $this->rest_route, '/block-renderer/' ) );
 		}
 
 		$this->is_editor = $is_editor;
@@ -107,12 +107,27 @@ class Frontend_Renderer {
 	}
 
 	/**
+	 * Whether the current request is a REST API request.
+	 *
+	 * Isolated so tests can exercise the REST branch without defining the
+	 * process-global REST_REQUEST constant.
+	 *
+	 * @return bool
+	 */
+	protected function is_rest_request(): bool {
+		return defined( 'REST_REQUEST' ) && REST_REQUEST;
+	}
+
+	/**
 	 * Determine whether a parsed block has been explicitly disabled.
 	 *
 	 * The attribute defaults to `true` and is only serialized when an author
-	 * turns it off, so an absent attribute means "enabled". Any present value
-	 * that is not boolean-true is treated as disabled, which fails closed for
-	 * imported or hand-authored markup (e.g. the string "false").
+	 * turns it off, so an absent attribute means "enabled". A present value is
+	 * evaluated with FILTER_VALIDATE_BOOLEAN: recognised truthy values (true,
+	 * 1, "1", "true", "yes", "on") keep the block enabled, while any other
+	 * present value (false, 0, "0", "", "false", "no", "off", null, or a
+	 * non-scalar) disables it. This fails closed for imported or hand-authored
+	 * markup.
 	 *
 	 * @param array $block Parsed block.
 	 * @return bool True when the block should be hidden on the front end.
