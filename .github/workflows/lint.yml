@@ -63,5 +63,11 @@ jobs:
       - name: Rebuild
         run: npm run build
 
-      - name: Fail if committed build/ differs from a fresh build
-        run: git diff --exit-code -- build/
+      - name: Fail if committed build/ is untracked or out of date
+        run: |
+          git add build/
+          git diff --cached --stat -- build/
+          git diff --cached --quiet -- build/ || {
+            echo "::error::build/ is untracked or out of sync with src/. Run 'npm run build' and commit the build/ directory.";
+            exit 1;
+          }

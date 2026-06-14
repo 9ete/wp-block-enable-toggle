@@ -1,0 +1,53 @@
+/**
+ * Block Enable Toggle — editor-only styles.
+ *
+ * Visual treatment for blocks that have been disabled (betEnabled = false).
+ * These styles load only in the block editor.
+ */
+
+// Canvas: dim disabled blocks and label them.
+.block-editor-block-list__block.is-block-enable-toggle-disabled {
+	position: relative;
+	opacity: 0.55;
+	outline: 1px dashed #757575;
+	outline-offset: 2px;
+	transition: opacity 0.15s ease-in-out;
+
+	&.is-selected,
+	&.is-multi-selected {
+		opacity: 0.75;
+		outline-color: #d63638;
+	}
+
+	// "Disabled" label, text supplied (and translated) via the data attribute.
+	&::after {
+		content: attr(data-block-enable-toggle-label);
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 21;
+		padding: 2px 6px;
+		font-size: 11px;
+		font-weight: 600;
+		line-height: 1.4;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		color: #fff;
+		background: #1e1e1e;
+		border-radius: 0 0 0 2px;
+		pointer-events: none;
+	}
+}
+
+// List View: dim the disabled row and mark it.
+.block-editor-list-view-leaf.is-block-enable-toggle-disabled {
+	opacity: 0.7;
+
+	.block-editor-list-view-block-select-button::after {
+		content: "\25CF"; // ● filled circle
+		margin-left: 6px;
+		color: #d63638;
+		font-size: 9px;
+		vertical-align: middle;
+	}
+}

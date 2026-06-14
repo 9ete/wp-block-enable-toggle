@@ -22,7 +22,7 @@ class Editor_Assets {
 	const HANDLE = 'block-enable-toggle-editor';
 
 	/**
-	 * Enqueue the compiled editor script and its translations.
+	 * Enqueue the compiled editor script, its styles, and its translations.
 	 */
 	public function enqueue(): void {
 		$asset = $this->asset_data();
@@ -40,6 +40,15 @@ class Editor_Assets {
 			'block-enable-toggle',
 			BLOCK_ENABLE_TOGGLE_DIR . 'languages'
 		);
+
+		wp_enqueue_style(
+			self::HANDLE,
+			BLOCK_ENABLE_TOGGLE_URL . 'build/index.css',
+			array(),
+			$asset['version']
+		);
+
+		wp_style_add_data( self::HANDLE, 'rtl', 'replace' );
 	}
 
 	/**
