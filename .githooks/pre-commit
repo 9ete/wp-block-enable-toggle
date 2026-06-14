@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# ----------------------------------------------------------------------------
+# pre-commit hook
+#
+# Auto-fix PHP formatting so staged files are clean before the commit message
+# editor opens. The heavier checks (lint, unit, e2e) run in commit-msg, after
+# the cheap conventional-commit message check passes.
+# ----------------------------------------------------------------------------
+
+if [ -f composer.json ] && [ -d vendor ]; then
+	staged_php=$(git diff --cached --name-only --diff-filter=ACMR -- '*.php')
+	composer lint:fix
+	# Re-stage any files phpcbf auto-fixed so the fixes land in this commit.
+	if [ -n "$staged_php" ]; then
+		printf '%s\n' "$staged_php" | xargs -I{} git add -- "{}"
+	fi
+fi

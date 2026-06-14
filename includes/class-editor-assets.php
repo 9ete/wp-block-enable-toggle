@@ -29,7 +29,7 @@ class Editor_Assets {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			BET_PLUGIN_URL . 'build/index.js',
+			BLOCK_ENABLE_TOGGLE_URL . 'build/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			true
@@ -38,7 +38,7 @@ class Editor_Assets {
 		wp_set_script_translations(
 			self::HANDLE,
 			'block-enable-toggle',
-			BET_PLUGIN_DIR . 'languages'
+			BLOCK_ENABLE_TOGGLE_DIR . 'languages'
 		);
 	}
 
@@ -51,11 +51,11 @@ class Editor_Assets {
 	 * @return array Associative array with 'dependencies' (string[]) and 'version' (string).
 	 */
 	public function asset_data(): array {
-		$asset_path = BET_PLUGIN_DIR . 'build/index.asset.php';
+		$asset_path = BLOCK_ENABLE_TOGGLE_DIR . 'build/index.asset.php';
 
 		$defaults = array(
 			'dependencies' => array(),
-			'version'      => BET_VERSION,
+			'version'      => BLOCK_ENABLE_TOGGLE_VERSION,
 		);
 
 		if ( ! file_exists( $asset_path ) ) {
@@ -70,7 +70,7 @@ class Editor_Assets {
 
 		return array(
 			'dependencies' => isset( $asset['dependencies'] ) && is_array( $asset['dependencies'] ) ? $asset['dependencies'] : array(),
-			'version'      => isset( $asset['version'] ) && is_string( $asset['version'] ) ? $asset['version'] : BET_VERSION,
+			'version'      => isset( $asset['version'] ) && is_string( $asset['version'] ) ? $asset['version'] : BLOCK_ENABLE_TOGGLE_VERSION,
 		);
 	}
 }

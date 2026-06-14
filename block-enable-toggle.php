@@ -22,13 +22,13 @@ namespace BlockEnableToggle;
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'BET_VERSION', '1.0.0' );
-define( 'BET_PLUGIN_FILE', __FILE__ );
-define( 'BET_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'BET_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'BLOCK_ENABLE_TOGGLE_VERSION', '1.0.0' );
+define( 'BLOCK_ENABLE_TOGGLE_FILE', __FILE__ );
+define( 'BLOCK_ENABLE_TOGGLE_DIR', plugin_dir_path( __FILE__ ) );
+define( 'BLOCK_ENABLE_TOGGLE_URL', plugin_dir_url( __FILE__ ) );
 
-require_once BET_PLUGIN_DIR . 'includes/class-plugin.php';
-require_once BET_PLUGIN_DIR . 'includes/class-editor-assets.php';
-require_once BET_PLUGIN_DIR . 'includes/class-frontend-renderer.php';
+require_once BLOCK_ENABLE_TOGGLE_DIR . 'includes/class-plugin.php';
+require_once BLOCK_ENABLE_TOGGLE_DIR . 'includes/class-editor-assets.php';
+require_once BLOCK_ENABLE_TOGGLE_DIR . 'includes/class-frontend-renderer.php';
 
 Plugin::instance()->init();
