@@ -1,0 +1,24 @@
+{
+	"name": "block-enable-toggle",
+	"version": "1.0.0",
+	"description": "Adds an Enabled toggle to every block. Disabled blocks stay in the editor but are never rendered on the front end.",
+	"author": "9ete",
+	"license": "GPL-2.0-or-later",
+	"private": true,
+	"keywords": [
+		"wordpress",
+		"gutenberg",
+		"block-editor"
+	],
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"format": "wp-scripts format",
+		"lint:js": "wp-scripts lint-js src",
+		"lint:js:fix": "wp-scripts lint-js src --fix",
+		"test": "wp-scripts test-unit-js --passWithNoTests"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.0.0"
+	}
+}
