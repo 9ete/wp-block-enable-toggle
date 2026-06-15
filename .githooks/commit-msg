@@ -51,10 +51,21 @@ if [ -d node_modules ]; then
 fi
 
 # --- Step 5: Cypress e2e (skip unless installed AND site reachable) ---------
+# Base URL resolution order:
+#   1. CYPRESS_BASE_URL env var (explicit override)
+#   2. WP_ENV_PORT env var → http://localhost:${WP_ENV_PORT}
+#   3. Default http://localhost:8888
+# Use Chrome to avoid Electron memory-pressure crashes in headless mode.
 if [ -d node_modules ] && npx --no-install cypress --version >/dev/null 2>&1; then
-	base_url="${CYPRESS_BASE_URL:-http://localhost:8888}"
+	if [ -n "$CYPRESS_BASE_URL" ]; then
+		base_url="$CYPRESS_BASE_URL"
+	elif [ -n "$WP_ENV_PORT" ]; then
+		base_url="http://localhost:${WP_ENV_PORT}"
+	else
+		base_url="http://localhost:8888"
+	fi
 	if curl -sSf "$base_url" -o /dev/null 2>/dev/null; then
-		npx --no-install cypress run || exit 1
+		CYPRESS_BASE_URL="$base_url" npx --no-install cypress run --browser chrome || exit 1
 	else
 		echo "Skipping Cypress e2e: $base_url not reachable."
 	fi
