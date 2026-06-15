@@ -13,8 +13,14 @@
 commit_msg_file="$1"
 commit_msg=$(cat "$commit_msg_file")
 
+# Skip all checks for merge / fixup / squash / amend / revert commits.
+# These commit types record lineage, not code changes; the originating
+# commits were already gated when first authored.
+if echo "$commit_msg" | grep -qE '^(Merge|fixup!|squash!|amend!|Revert) '; then
+	exit 0
+fi
+
 # --- Step 1: Conventional Commits validation -------------------------------
-# Skip merge / fixup / squash / amend / revert commits.
 if ! echo "$commit_msg" | grep -qE '^(Merge|fixup!|squash!|amend!|Revert) '; then
 
 	# Format: [KEY-NNN: ]<type>[(scope)][!]: <description>
