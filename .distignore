@@ -1,0 +1,46 @@
+# Files and directories that must NOT ship in the distributed plugin zip.
+# Consumed by bin/build-zip.sh (rsync --exclude-from).
+
+# VCS / CI / meta
+.git
+.github
+.githooks
+.gitignore
+.gitattributes
+.distignore
+.editorconfig
+
+# Local dev environment
+.wp-env.json
+.wp-env.override.json
+node_modules
+vendor
+
+# Source (the compiled build/ ships instead)
+src
+
+# Tests / QA tooling
+tests
+bin
+cypress
+cypress.config.js
+phpunit.xml
+phpunit.xml.dist
+phpcs.xml
+phpcs.xml.dist
+.phpunit.result.cache
+
+# Package manifests
+composer.json
+composer.lock
+package.json
+package-lock.json
+
+# Repo docs + wp.org listing assets (assets live in SVN /assets, not the zip)
+*.md
+.wordpress-org
+
+# Build artifacts
+zips
+*.zip
+.DS_Store

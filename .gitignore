@@ -1,0 +1,19 @@
+# Dependencies
+/node_modules/
+/vendor/
+
+# Build / distribution artifacts
+/*.zip
+/zips/
+/block-enable-toggle/
+
+# Test + tooling caches
+.phpunit.result.cache
+/cypress/videos/
+/cypress/screenshots/
+/cypress/downloads/
+
+# OS / editor cruft
+.DS_Store
+*.log
+npm-debug.log*
