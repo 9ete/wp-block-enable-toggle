@@ -2,7 +2,7 @@
 Contributors: 9ete
 Tags: block editor, gutenberg, visibility, blocks, hide
 Requires at least: 6.6
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPL-2.0-or-later
